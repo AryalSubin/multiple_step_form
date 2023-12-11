@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiple Step Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      form {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        height: 600px;
+        width: 500px;
+      }
+
+      .form-step {
+        display: none;
+      }
+
+      .form-step.active {
+        display: block;
+      }
+
+      .form-header {
+        background-color: #008ecc;
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+      }
+
+      .form-body {
+        padding: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 12px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .checkbox {
+        width: auto;
+      }
+
+      button {
+        background-color: #008ecc;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      .step-indicator {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .step-indicator span {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background-color: #ccc;
+        border-radius: 50%;
+        margin: 0 5px;
+      }
+
+      .step-indicator .active-step {
+        background-color: #3498db;
+      }
+      button:disabled {
+        cursor: not-allowed;
+      }
+      .prevNextButton {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 10px 0 10px;
+      }
+      .prevNextButton.one {
+        display: flex;
+        justify-content: end;
+        margin: 0 10px 0 10px;
+      }
+      .male_gen,
+      .female_gen {
+        display: inline-block;
+      }
+      select {
+        width: 100%;
+        border-radius: 20px;
+        padding: 5px 0px 5px 0px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      /* button:disabled:hover {
+        cursor: not-allowed;
+      } */
+    </style>
+  </head>
+  <body>
+    <form id="multiStepForm" onsubmit="">
+      <div class="form-header">
+        <h2>Multiple Step Form</h2>
+      </div>
+
+      <div class="form-body">
+        <!-- step 1 -->
+        <div class="form-step active" id="step1">
+          <h2>Step 1/3</h2>
+
+          <label for="name">*Name:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="gender">Gender:</label>
+          <div style="display: flex; justify-content: space-around">
+            <div style="display: flex">
+              <input
+                class="radio"
+                type="radio"
+                id="male"
+                name="gender"
+                value="male"
+              />
+              <label for="male">Male</label>
+            </div>
+            <div style="display: flex">
+              <input
+                class="radio"
+                type="radio"
+                id="female"
+                name="gender"
+                value="female"
+              />
+              <label for="reading">Female</label>
+            </div>
+          </div>
+
+          <label for="contact">*Contact:</label>
+          <input type="text" id="contact" name="contact" required />
+          <label for="address">*Address:</label>
+          <input type="text" id="address" name="address" required />
+
+          <!-- buttons  -->
+          <div class="prevNextButton one">
+            <button type="button" id="nextButton" onclick="nextStep()">
+              Next
+            </button>
+          </div>
+        </div>
+        <!-- step 2 -->
+        <div class="form-step" id="step2">
+          <h2>Step 2/3</h2>
+          <label for="nationality">Nationality:</label>
+          <select name="nationality" id="nationality">
+            <option value="nepal">Nepal</option>
+            <option value="uk">UK</option>
+            <option value="us">US</option>
+            <option value="canada">Canada</option>
+          </select>
+
+          <label for="interests">Interests:</label>
+          <div style="display: flex; justify-content: space-around">
+            <div style="display: flex">
+              <input
+                class="checkbox"
+                type="checkbox"
+                id="coding"
+                name="interests"
+                value="coding"
+              />
+              <label for="coding">Coding</label>
+            </div>
+            <div style="display: flex">
+              <input
+                class="checkbox"
+                type="checkbox"
+                id="reading"
+                name="reading"
+                value="reading"
+              />
+              <label for="reading">Reading</label>
+            </div>
+          </div>
+
+          <label for="email">*email:</label>
+          <input type="email" id="email" name="email" required />
+
+          <!-- buttons  -->
+          <div class="prevNextButton">
+            <button type="button" id="prevButton" onclick="prevStep()">
+              Previous
+            </button>
+            <button type="button" id="nextButton" onclick="nextStep()">
+              Next
+            </button>
+          </div>
+        </div>
+        <!-- step 3 -->
+        <div class="form-step" id="step3">
+          <h2>Step 3/3</h2>
+          <label for="comments">Comments:</label>
+          <textarea id="comments" name="comments" rows="14" required></textarea>
+          <!-- buttons  -->
+          <div class="prevNextButton">
+            <button type="button" id="prevButton" onclick="prevStep()">
+              Previous
+            </button>
+            <button type="submit" id="nextButton" onclick="submitForm()">
+              submit
+            </button>
+          </div>
+        </div>
+        <!-- step 4 -->
+        <div class="form-step" id="step4">
+          <p id="reviewName">name:</p>
+        </div>
+      </div>
+    </form>
+
+    <script>
+      let currentStep = 1;
+
+      function nextStep() {
+        if (validateStep(currentStep)) {
+          document
+            .getElementById(`step${currentStep}`)
+            .classList.remove("active");
+          currentStep++;
+          document.getElementById(`step${currentStep}`).classList.add("active");
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 1) {
+          document
+            .getElementById(`step${currentStep}`)
+            .classList.remove("active");
+          currentStep--;
+          document.getElementById(`step${currentStep}`).classList.add("active");
+        }
+      }
+
+      function validateStep(step) {
+        const requiredFields = document.querySelectorAll(
+          `#step${step} [required]`
+        );
+
+        for (const field of requiredFields) {
+          if (!field.value.trim()) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+      //confirmation page
+      function submitForm() {
+        // Get values from step 1
+        const name = document.getElementById("name").value;
+        const gender = document.querySelector(
+          'input[name="gender"]:checked'
+        ).value;
+        const contact = document.getElementById("contact").value;
+        const address = document.getElementById("address").value;
+
+        // Get values from step 2
+        const nationality = document.getElementById("nationality").value;
+        const interests = Array.from(
+          document.querySelectorAll('input[name="interests"]:checked')
+        ).map((checkbox) => checkbox.value);
+        const email = document.getElementById("email").value;
+
+        // Get values from step 3
+        const comments = document.getElementById("comments").value;
+
+        document.getElementById("reviewName").innerText =
+          "Name: " + document.getElementById("name").value;
+
+        confirmationPage.classList.add("active");
+
+        // Hide other steps
+        for (let i = 1; i <= 3; i++) {
+          document.getElementById(`step${i}`).classList.remove("active");
+        }
+        console.log(name);
+
+        // Prevent the form from submitting
+        return false;
+      }
+    </script>
+  </body>
+</html>
